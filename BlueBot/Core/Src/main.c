@@ -162,7 +162,7 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-#define IO_UART huart2
+#define IO_UART huart1
 
 int __io_putchar(int ch) {
 

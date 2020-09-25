@@ -18,7 +18,7 @@
 #define TICK_RATE 10 // 10ms
 
 #define LED_BLINK_RATE 50 // 50*10ms = 1/2 second
-#define PID_RATE       2 // 2*10ms = 0.02 second
+#define PID_RATE       2 // 2*10ms = 0.02 second (50Hz)
 
 #define DT ((float)(TICK_RATE*PID_RATE)/1000)
 
@@ -137,6 +137,25 @@ void app_main(void) {
 				speed_r=MAX_SPEED/2;
 			}
 
+			if(c=='d') {
+				speed_l=MAX_SPEED/10;
+				speed_r=MAX_SPEED/10;
+			}
+
+			if(c=='b') {
+				speed_l=-MAX_SPEED/10;
+				speed_r=-MAX_SPEED/10;
+			}
+
+			if(c=='s') {
+				speed_l=MAX_SPEED/15;
+				speed_r=-MAX_SPEED/15;
+			}
+			if(c=='a') {
+				speed_l=-MAX_SPEED/15;
+				speed_r=MAX_SPEED/15;
+			}
+			clearerr(stdin);
 		}
 		else{
 		    clearerr(stdin);
