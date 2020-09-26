@@ -100,7 +100,7 @@ int main(void)
   MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
 
-  app_main(); // never returns
+  app_main(); // call the application main loop, never returns
 
   /* USER CODE END 2 */
 
@@ -162,7 +162,10 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-#define IO_UART huart1
+
+#define IO_UART huart1 // set to uart used for serial IO
+
+// Implement uart IO functions for syscalls module
 
 int __io_putchar(int ch) {
 

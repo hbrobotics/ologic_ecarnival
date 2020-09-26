@@ -8,17 +8,22 @@
 #ifndef INC_PID_H_
 #define INC_PID_H_
 
+// Define PID (PI) state variables
 typedef struct PID_t {
-	float kp;
-	float ki;
-	float error;
-	float I;
+	float kp; // Proportional tuning constant
+	float ki; // Integral tuning constant
 
-	const char * tag;
-	float dt;
+	float error; // last error value
+	float I;     // running integral of error
+	float dt;    // time interval for updates
+
+	const char * tag; // tag label for debug messages
+
 
 } PID;
 
-float pidUpdate(float target, float current, PID * pid_state);
+
+// public module API functions
+float pidUpdate(float target, float current, PID * pid_state); // update state of PID and return new output
 
 #endif /* INC_PID_H_ */

@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// update encoder state variables with new position and velocity
 void updateEncoder(ENC_STATUS * enc) {
 
 	int16_t pos16 = enc->dir*(int16_t) __HAL_TIM_GET_COUNTER(enc->htim); // treat timers as signed 16 bit
@@ -27,11 +28,13 @@ void updateEncoder(ENC_STATUS * enc) {
 		}
 	}
 
-	enc->vel = diff;
-	enc->pos += diff;
+	// update state
+	enc->vel = enc->scale*(float)diff;   // output velocity as rad/sec
+	enc->pos += diff;  // position is integral of raw velocity
 
-	//printf("Enc %s: pos=%ld, vel=%ld last=%d\r\n",enc->tag,enc->pos,enc->vel,enc->last);
+	// output debug messages
+	//printf("Enc %s: pos=%ld, vel=%ld last=%d\r\n",enc->tag,enc->pos,(uint32_t)(enc->vel*(1000)),enc->last);
 
-	enc->last = pos16;
+	enc->last = pos16; // save counter value for next time so we can calculate differences
 
 }
