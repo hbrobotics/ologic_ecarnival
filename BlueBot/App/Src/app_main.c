@@ -94,8 +94,8 @@ void app_main(void) {
 				updateEncoder(&enc_right);
 
 				// run PID for speed control
-				duty_l = pidUpdate(speed_l,(float)enc_left.vel,&pid_left);
-				duty_r = pidUpdate(speed_r,(float)enc_right.vel,&pid_right);
+				duty_l = pidUpdate(speed_l,enc_left.vel,&pid_left);
+				duty_r = pidUpdate(speed_r,enc_right.vel,&pid_right);
 
 				//duty_l = 0.5;
 				//duty_r = 0.5;
@@ -161,7 +161,7 @@ void app_main(void) {
 				speed_l=MAX_SPEED/15;
 				speed_r=-MAX_SPEED/15;
 			}
-			if(c=='a') {  //  turn (rotate) left at 1/15 max speed
+			if(c=='a') {  //  turn (rotate) right at 1/15 max speed
 				speed_l=-MAX_SPEED/15;
 				speed_r=MAX_SPEED/15;
 			}
