@@ -12,7 +12,7 @@
 // implement basic parallel PID (PI) controller
 float pidUpdate(float target, float current, PID * pid_state)  {
 
-	float error = target - current; // compute error
+	float error = target - current; // compute erro@here - any updatesr
 
 	// compute integral
     float I = pid_state->I + error*pid_state->dt;

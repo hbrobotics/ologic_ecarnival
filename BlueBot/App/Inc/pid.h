@@ -26,4 +26,8 @@ typedef struct PID_t {
 // public module API functions
 float pidUpdate(float target, float current, PID * pid_state); // update state of PID and return new output
 
+
+extern PID pid_left;
+extern PID pid_right;
+
 #endif /* INC_PID_H_ */

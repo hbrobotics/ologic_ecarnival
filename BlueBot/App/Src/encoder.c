@@ -29,11 +29,11 @@ void updateEncoder(ENC_STATUS * enc) {
 	}
 
 	// update state
-	enc->vel = enc->scale*(float)diff;   // output velocity as rad/sec
-	enc->pos += diff;  // position is integral of raw velocity
+	enc->vel = ENCODER_VEL_SCALE*(float)diff;   // output velocity as rad/sec
+	enc->pos += diff*ENCODER_DIST_SCALE;  // position is integral of raw velocity
 
 	// output debug messages
-	//printf("Enc %s: pos=%ld, vel=%ld last=%d\r\n",enc->tag,enc->pos,(uint32_t)(enc->vel*(1000)),enc->last);
+	//printf("Enc %s: pos=%5.2f, vel=%5.2f last=%d\r\n",enc->tag,enc->pos,enc->vel,enc->last);
 
 	enc->last = pos16; // save counter value for next time so we can calculate differences
 
