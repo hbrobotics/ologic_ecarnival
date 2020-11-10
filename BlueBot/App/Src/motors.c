@@ -79,6 +79,11 @@ void STOP(void) {
 	driving = false;
 }
 
+void setMotorSpeed(float left, float right) {
+	speed_l = left;
+	speed_r = right;
+}
+
 void drive(float lin_vel, float ang_vel) {
 	speed_l =  (lin_vel - ang_vel * WHEEL_BASE/2.0)/WHEEL_RADIUS;
 	speed_r =  (lin_vel + ang_vel * WHEEL_BASE/2.0)/WHEEL_RADIUS;
@@ -97,8 +102,8 @@ MotorEvent updateMotors(bool pid_update, float DT) {
 		updateEncoder(&enc_right);
 
 		// run PID for speed control
-		duty_l = pidUpdate(speed_l,enc_left.vel,&pid_left);
-		duty_r = pidUpdate(speed_r,enc_right.vel,&pid_right);
+		duty_l = pidUpdate(speed_l,enc_left.state.vel,&pid_left);
+		duty_r = pidUpdate(speed_r,enc_right.state.vel,&pid_right);
 
 		// set output PWM duty for both motors
 		setMtrSpeed(TIM_CHANNEL_1,TIM_CHANNEL_2,duty_l);
@@ -138,7 +143,7 @@ MotorEvent updateMotors(bool pid_update, float DT) {
 			}
 		}
 		if(driving) {
-			printf("sh=%5.2f, th=%5.2f, h=%5.2f, rh=%5.2f\n",start_heading,target_heading,heading,ref_heading);
+			//printf("sh=%5.2f, th=%5.2f, h=%5.2f, rh=%5.2f\n",start_heading,target_heading,heading,ref_heading);
 		}
 
 	}
@@ -193,8 +198,8 @@ void driveTo(float dist, float lin_vel) {
 
 void updatePose(float DT) {
 
-	float dl = enc_left.vel*DT*WHEEL_RADIUS;
-	float dr = enc_right.vel*DT*WHEEL_RADIUS;
+	float dl = enc_left.state.vel*DT*WHEEL_RADIUS;
+	float dr = enc_right.state.vel*DT*WHEEL_RADIUS;
 
 	float d = (dl+dr)/2.0;
 	float dt = (dr-dl)/WHEEL_BASE;

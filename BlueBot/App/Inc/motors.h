@@ -35,6 +35,8 @@ void drive(float lin_vel, float ang_vel);
 void turnTo(float angle, float ang_vel);
 void driveTo(float dist, float lin_vel);
 
+void setMotorSpeed(float left, float right);
+
 MotorEvent updateMotors(bool pid_update, float DT);
 
 #endif /* INC_MOTORS_H_ */

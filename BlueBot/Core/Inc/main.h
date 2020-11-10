@@ -58,7 +58,7 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define MTR_PWM_PERIOD 2100
+#define MTR_PWM_PERIOD 1280
 #define ENC1_A_Pin GPIO_PIN_0
 #define ENC1_A_GPIO_Port GPIOA
 #define ENC1_B_Pin GPIO_PIN_1

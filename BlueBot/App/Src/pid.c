@@ -10,12 +10,14 @@
 
 
 // implement basic parallel PID (PI) controller
-float pidUpdate(float target, float current, PID * pid_state)  {
+float pidUpdate(float target, float current, PID * pid)  {
 
-	float error = target - current; // compute erro@here - any updatesr
+	float error = target - current; // compute error
+
+	PID_STATE * pid_state = &pid->state;
 
 	// compute integral
-    float I = pid_state->I + error*pid_state->dt;
+    float I = pid_state->I + error*pid->dt;
 
     // reset integral when stopped
     if(target==0.0 && current==0.0) {
@@ -23,7 +25,11 @@ float pidUpdate(float target, float current, PID * pid_state)  {
     }
 
     // compute output as Kp * error + Ki * dT * Integral(error)
-	float duty = pid_state->kp * error + pid_state->ki * I;
+	float duty = pid->kp * error + pid->ki * I;
+
+	if(pid->openLoop) {
+		duty= target;
+	}
 
 	// clamp output to +-1
 	if (duty > 1.0) {
@@ -43,6 +49,10 @@ float pidUpdate(float target, float current, PID * pid_state)  {
 	// update statee
 	pid_state->error = error;
 	pid_state->I = I;
+
+	pid_state->ref=target;
+	pid_state->fb=current;
+	pid_state->u=duty;
 
 	// return desired output
 	return duty;
