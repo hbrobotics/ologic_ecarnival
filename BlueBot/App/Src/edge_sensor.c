@@ -33,7 +33,7 @@ EDGE_SENSOR_STATE getEdgeSensorState(uint32_t sensor) {
 	uint32_t hit =  (sensor_state & sensor)?ES_HIT:ES_CLEAR;
 
 	if(sensor_changed & sensor) {
-		printf("Edge Sensor %ld: %s\n",sensor,((hit==ES_HIT)?"Hit":"Clear"));
+		//printf("Edge Sensor %ld: %s\n",sensor,((hit==ES_HIT)?"Hit":"Clear"));
 		sensor_changed &= ~sensor;
 	}
 

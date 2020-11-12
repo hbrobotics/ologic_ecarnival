@@ -25,27 +25,28 @@
 #include "gripper.h"
 
 
+
 #define TICK_RATE 10 // 10msd
 
 #define LED_BLINK_RATE 50 // 50*10ms = 1/2 second
 #define PID_RATE       2 // 2*10ms = 0.02 second (50Hz)
 
-#define DT (((float)(TICK_RATE*PID_RATE))/1000.0) // compute sample time for PID in seconds
+#define DT (((float)(TICK_RATE*PID_RATE))/1000.0f) // compute sample time for PID in seconds
 
 // PID Tunings
-#define KP 0.067 // 0.1064// 0.065
-#define KI 1.0 // 0.1242 //2.0
+#define KP 0.067f // 0.1064// 0.065
+#define KI 1.0f // 0.1242 //2.0
 
 
 
 
 // declare the PID state variables
-PID pid_right = {KP,KI,DT,false,"Right", {0.0,0.0,0.0,0.0,0.0}};
-PID pid_left  = {KP,KI,DT,false,"Left", {0.0,0.0,0.0,0.0,0.0}};
+PID pid_right = {KP,KI,DT,false,"Right", {0.0f,0.0f,0.0f,0.0f,0.0f}};
+PID pid_left  = {KP,KI,DT,false,"Left", {0.0f,0.0f,0.0f,0.0f,0.0f}};
 
 // declare the encoder state variables
-ENCODER enc_right = {0,0.0,1,&htim1,"Right",{0.0,0.0}};
-ENCODER enc_left  = {0,0.0,-1,&htim2,"Left",{0.0,0.0}};
+ENCODER enc_right = {0,0.0f,1,&htim1,"Right",{0.0f,0.0f}};
+ENCODER enc_left  = {0,0.0f,-1,&htim2,"Left",{0.0f,0.0f}};
 
 
 
@@ -71,7 +72,7 @@ void app_main(void) {
 	HAL_TIM_Encoder_Start(&htim1,TIM_CHANNEL_ALL);
 
 
-	printf("E-Carnival Robot Ready\r\n");
+	//printf("E-Carnival Robot Ready\r\n");
 
 	uint32_t tick = HAL_GetTick();
 

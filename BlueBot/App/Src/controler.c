@@ -10,12 +10,14 @@
 #include "edge_sensor.h"
 #include "motors.h"
 
-#define FWD_SPEED 0.1
-#define BACK_SPEED 0.1
-#define TURN_SPEED (0.6)
+#define FWD_SPEED 0.1f
+#define BACK_SPEED 0.1f
+#define TURN_SPEED (0.6f)
 
-#define BACK_DIST (-0.04)
-#define TURN_ANG (M_PI/2.0)
+extern const float M_PI_F;
+
+#define BACK_DIST (-0.04f)
+#define TURN_ANG (M_PI_F/2.0f)
 
 typedef enum State_t {
 	ST_IDLE=0,
@@ -50,7 +52,7 @@ void updateControler(MotorEvent event) {
 		case ST_IDLE:
 			switch(event) {
 				case CE_M1:
-					drive(FWD_SPEED,0.0);
+					drive(FWD_SPEED,0.0f);
 					state= ST_M1_FWD;
 					break;
 
@@ -113,7 +115,7 @@ void updateControler(MotorEvent event) {
 		case ST_M1_TURN:
 			switch(event) {
 				case ME_DONE_TURN:
-					drive(FWD_SPEED,0.0);
+					drive(FWD_SPEED,0.0f);
 					state= ST_M1_FWD;
 					break;
 

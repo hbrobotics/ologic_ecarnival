@@ -11,8 +11,10 @@
 #include <stdbool.h>
 #include <math.h>
 
-#define MAX_LIN_VEL 0.5         //  m/s
-#define MAX_ANG_VEL (2.0*M_PI)  //  rad/s
+extern const float M_PI_F;
+
+#define MAX_LIN_VEL 0.5f         //  m/s
+#define MAX_ANG_VEL (2.0f*M_PI_F)  //  rad/s
 
 
 typedef enum MotorEvents_t {

@@ -31,7 +31,7 @@ static TELEMETRY telemetry;
 
 static float randf(void);
 
-#define SPEED_CHANGE 0.1 // input speed step for manual wheel speed commands
+#define SPEED_CHANGE 0.1f // input speed step for manual wheel speed commands
 
 
 void doUI(uint8_t * packet, int len, MotorEvent *event) {
@@ -97,45 +97,45 @@ void doUI(uint8_t * packet, int len, MotorEvent *event) {
 		if(c=='o') {
 			setOpenLoop(&pid_left,false);
 			setOpenLoop(&pid_right,false);
-			printf("Motors In Closed Loop Mode\n");
+			//printf("Motors In Closed Loop Mode\n");
 		}
 
 		if(c=='O') {
 			setOpenLoop(&pid_left,true);
 			setOpenLoop(&pid_right,true);
-			printf("Motors In Open Loop Mode\n");
+			//printf("Motors In Open Loop Mode\n");
 		}
 
 		if(c=='w') { // drive both wheels forward at 1/10 max speed
-			drive(MAX_LIN_VEL/2,0);
+			drive(MAX_LIN_VEL/2.0f,0.0f);
 		}
 
 		if(c=='z') {  // drive both wheels backward at 1/10 max speed
-			drive(-MAX_LIN_VEL/2,0);
+			drive(-MAX_LIN_VEL/2.0f,0.0f);
 		}
 
 		if(c=='s') {  //  turn (rotate) left at 1/15 max speed
-			drive(0,-MAX_ANG_VEL/4);
+			drive(0.0f,-MAX_ANG_VEL/4.0f);
 
 		}
 		if(c=='a') {  //  turn (rotate) right at 1/15 max speed
-			drive(0,MAX_ANG_VEL/4);
+			drive(0.0f,MAX_ANG_VEL/4.0f);
 		}
 
 		if(c=='l') {  //  turn (rotate) right at 1/15 max speed
-			turnTo(M_PI/4.0,MAX_ANG_VEL/4);
+			turnTo(M_PI/4.0f,MAX_ANG_VEL/4.0f);
 		}
 
 		if(c=='r') {  //  turn (rotate) right at 1/15 max speed
-			turnTo(-M_PI/4.0,MAX_ANG_VEL/4);
+			turnTo(-M_PI/4.0f,MAX_ANG_VEL/4.0f);
 		}
 
 		if(c=='f') {  //  turn (rotate) right at 1/15 max speed
-			driveTo(0.3,MAX_LIN_VEL/4);
+			driveTo(0.3f,MAX_LIN_VEL/4.0f);
 		}
 
 		if(c=='b') {  //  turn (rotate) right at 1/15 max speed
-			driveTo(-0.3,MAX_LIN_VEL/4);
+			driveTo(-0.3f,MAX_LIN_VEL/4.0f);
 		}
 
 		if(c=='G') {  //  move gripper up
@@ -191,6 +191,6 @@ void setIRRangeState(float range_long, float range_short) {
 
 
 float randf(void) {
-	return 0.5 *  ((float)rand())/((float)RAND_MAX);
+	return 0.5f *  ((float)rand())/((float)RAND_MAX);
 
 }

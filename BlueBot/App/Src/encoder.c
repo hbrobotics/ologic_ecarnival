@@ -33,7 +33,7 @@ void updateEncoder(ENCODER * enc) {
 	// update state
 
 	float vel =  ENCODER_VEL_SCALE*(float)diff;   // output velocity as rad/sec
-	state->vel = (vel+enc->last_vel)/2.0;
+	state->vel = (vel+enc->last_vel)/2.0f;
 	enc->last_vel=vel;
 
 	state->pos += diff*ENCODER_DIST_SCALE;  // position is integral of raw velocity

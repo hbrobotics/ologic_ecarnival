@@ -20,8 +20,8 @@ float pidUpdate(float target, float current, PID * pid)  {
     float I = pid_state->I + error*pid->dt;
 
     // reset integral when stopped
-    if(target==0.0 && current==0.0) {
-    	I=0;
+    if(target==0.0f && current==0.0f) {
+    	I=0.0f;
     }
 
     // compute output as Kp * error + Ki * dT * Integral(error)
@@ -32,12 +32,12 @@ float pidUpdate(float target, float current, PID * pid)  {
 	}
 
 	// clamp output to +-1
-	if (duty > 1.0) {
-		duty = 1.0;
+	if (duty > 1.0f) {
+		duty = 1.0f;
 	}
 
-	if (duty < -1.0) {
-		duty = -1.0;
+	if (duty < -1.0f) {
+		duty = -1.0f;
 	}
 
 	// Long fom message for debugging

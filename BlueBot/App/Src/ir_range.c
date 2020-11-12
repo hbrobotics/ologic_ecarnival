@@ -13,19 +13,19 @@
 #define LR_ADC ADC_1
 #define SR_ADC ADC_2
 
-#define SCALE 0.0008056640625 // ADC to volts
+#define SCALE 0.0008056640625f // ADC to volts
 
 
-#define SR_A 15.5
-#define SR_B -0.8647
-#define SR_C -2.494
+#define SR_A 15.5f
+#define SR_B -0.8647f
+#define SR_C -2.494f
 
-#define LR_A 76.98
-#define LR_B -0.9005
-#define LR_C -13.04
+#define LR_A 76.98f
+#define LR_B -0.9005f
+#define LR_C -13.04f
 
 
-static float dist[NUM_IR_SENSORS]={-1.0,-1.0};
+static float dist[NUM_IR_SENSORS]={-1.0f,-1.0f};
 
 
 static float calibrate(float v,float a,float b, float c) ;
@@ -58,6 +58,5 @@ float sr=getShortRangeIR();
 }
 
 float calibrate(float v, float a, float b, float c) {
-
-	return a * pow(v,b) +c;
+	return a * powf(v,b) +c;
 }
