@@ -139,7 +139,9 @@ MotorEvent updateMotors(bool pid_update, float DT) {
 		}
 
 		if(driving && (target_dist_2 != 0.0f)) {
-			if ((pose_x-start_pose_x*pose_x-start_pose_x+pose_y-start_pose_y*pose_x-start_pose_y) >= target_dist_2) {
+			float dx=pose_x-start_pose_x;
+			float dy=pose_y-start_pose_y;
+			if (( dx*dx+dy*dy) >= target_dist_2) {
 				STOP();
 				event = ME_DONE_DRIVE;
 
