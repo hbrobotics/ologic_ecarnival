@@ -1,8 +1,10 @@
 /*
  * app_main.h
  *
+ *  Main application module
+ *
  *  Created on: Sep 2, 2020
- *      Author: ralph
+ *      Author: Ralph Gnauck
  */
 
 #ifndef _APP_MAIN_H_

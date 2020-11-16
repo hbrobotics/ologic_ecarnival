@@ -1,8 +1,10 @@
 /*
  * encoder.c
  *
+ * Process the encoder inputs and calculate position and velocity of each wheel
+ *
  *  Created on: Sep 16, 2020
- *      Author: ralph
+ *      Author: Ralph Gnauck
  */
 
 #include "encoder.h"

@@ -1,8 +1,10 @@
 /*
  * pid.h
  *
+ *  Implement PI controller
+ *
  *  Created on: Sep 16, 2020
- *      Author: ralph
+ *      Author: Ralph Gnauck
  */
 
 #ifndef INC_PID_H_
@@ -40,8 +42,10 @@ typedef struct PID_t {
 // public module API functions
 float pidUpdate(float target, float current, PID * pid); // update state of PID and return new output
 
+// Controller can be set to open loop to gather open loop data to use for tuning
 inline bool setOpenLoop(PID * pid, bool openLoop) { pid->openLoop=openLoop; return openLoop; };
 
+// refeneces to PID state variables
 extern PID pid_left;
 extern PID pid_right;
 

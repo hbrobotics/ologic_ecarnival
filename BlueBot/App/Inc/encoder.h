@@ -1,8 +1,10 @@
 /*
  * encoder.h
  *
+ *  Process the encoder inputs and calculate position and velocity of each wheel
+ *
  *  Created on: Sep 16, 2020
- *      Author: ralph
+ *      Author: Ralph Gnauck
  */
 
 #ifndef INC_ENCODER_H_
@@ -17,7 +19,7 @@
 // encoder state variables
 typedef struct ENCODER_STATE_t {
 	float pos;     // cumulative position (m), signed relative to 0 when robot starts (wheel going forward increments, backwards decrements position)
-	float vel;       // current wheel velocity rad/s.
+	float vel;     // current wheel velocity rad/s.
 } ENCODER_STATE;
 
 // define the Encoder config variables
@@ -30,13 +32,16 @@ typedef struct ENC_STATUS_t {
 
 	const char *tag; // Tag (name) of this encoder to show in debug messages
 
-	ENCODER_STATE state;
+	ENCODER_STATE state; // encoder state info
 } ENCODER;
 
 
+// called at PID update rate to update position and velocity data
 void updateEncoder(ENCODER * enc);
 
 
+// reference to the state for each encoder
 extern ENCODER enc_left;
 extern ENCODER enc_right;
+
 #endif /* INC_ENCODER_H_ */

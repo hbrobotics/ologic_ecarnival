@@ -1,8 +1,10 @@
 /*
  * pid.c
  *
+ *  Implement PI controller
+ *
  *  Created on: Sep 16, 2020
- *      Author: ralph
+ *      Author: Ralph Gnauck
  */
 
 #include <stdio.h>
@@ -14,7 +16,7 @@ float pidUpdate(float target, float current, PID * pid)  {
 
 	float error = target - current; // compute error
 
-	PID_STATE * pid_state = &pid->state;
+	PID_STATE * pid_state = &pid->state; // get pointer to PID state info in PID structure
 
 	// compute integral
     float I = pid_state->I + error*pid->dt;
@@ -27,7 +29,7 @@ float pidUpdate(float target, float current, PID * pid)  {
     // compute output as Kp * error + Ki * dT * Integral(error)
 	float duty = pid->kp * error + pid->ki * I;
 
-	if(pid->openLoop) {
+	if(pid->openLoop) { // if in open loop bypass code and just pass input to output
 		duty= target;
 	}
 
