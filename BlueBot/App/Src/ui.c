@@ -101,7 +101,6 @@ void doUI(uint8_t * packet, int len, MotorEvent *event) {
 
 		if(c=='p') { // generate turning step command for PID tuning (open loop) (step  wheels to random power)
 			float v = randf(MAX_RAND_SPEED);
-
 			setMotorSpeed(-v,v);
 		}
 
@@ -130,11 +129,11 @@ void doUI(uint8_t * packet, int len, MotorEvent *event) {
 			drive(-MAX_LIN_VEL/2.0f,0.0f);
 		}
 
-		if(c=='s') {  //  turn (rotate) left at 1/4 max speed
+		if(c=='s') {  //  turn (rotate) right at 1/4 max speed
 			drive(0.0f,-MAX_ANG_VEL/4.0f);
 
 		}
-		if(c=='a') {  //  turn (rotate) right at 1/4 max speed
+		if(c=='a') {  //  turn (rotate) left at 1/4 max speed
 			drive(0.0f,MAX_ANG_VEL/4.0f);
 		}
 

@@ -37,7 +37,7 @@
 
 // PID Tunings
 #define KP 0.067f // 0.1064// 0.065
-#define KI 1.0f // 0.1242 //2.0
+#define KI 1.0f   // 0.1242 //2.0
 
 
 

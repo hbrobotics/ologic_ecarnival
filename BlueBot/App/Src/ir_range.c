@@ -20,7 +20,9 @@
 
 #define SCALE 0.0008056640625f // ADC to volts
 
-// Define calibration coefficients for each sensor - raw data has been fit to a 2nd order polynomial approximation function for calibration
+// Define calibration coefficients for each sensor - raw data has been fit to a * order polynomial approximation function for calibration
+// dist = a * volts^b + c
+
 // Coefficients for short range sensor
 #define SR_A 15.5f
 #define SR_B -0.8647f
@@ -31,6 +33,13 @@
 #define LR_B -0.9005f
 #define LR_C -13.04f
 
+#define alpha 0.95f // eponential averaging filter coefficient
+
+#define MAX_LR 150.0f
+#define MIN_LR 20.0f
+
+#define MAX_SR 25.0f
+#define MIN_SR 4.0f
 
 // current distance reading for each sensor
 static float dist[NUM_IR_SENSORS]={-1.0f,-1.0f}; // distance in cm
@@ -45,23 +54,33 @@ void updateIRSensors(void) {
 
 	uint32_t value;
 	if(get_adc(LR_ADC,&value)) { // get new ADC reading for long range sensor (if any)
-		dist[LR_IR]=calibrate(value*SCALE, LR_A, LR_B, LR_C); // calculate distance from raw ADC value
+		dist[LR_IR]=(dist[LR_IR]*alpha)+((1-alpha)*calibrate(value*SCALE, LR_A, LR_B, LR_C)); // calculate distance from raw ADC value
 	}
 	if(get_adc(SR_ADC,&value)) { // get new ADC reading for short range sensor (if any)
-		dist[SR_IR]=calibrate(value*SCALE, SR_A, SR_B, SR_C); // calculate distance from raw ADC value
+		dist[SR_IR]=(dist[SR_IR]*alpha)+((1-alpha)*calibrate(value*SCALE, SR_A, SR_B, SR_C)); // calculate distance from raw ADC value
 	}
 }
 
 // return latest measurement from long range sensor
 // returns distance in cm
 float getLongRangeIR(void) {
-	return dist[LR_IR];
+	float lr= dist[LR_IR];
+	if (lr < MIN_LR || lr > MAX_LR) {
+		return  NAN;
+	}
+	return lr;
 }
 
 // return latest measurement from short range sensor
 // returns distance in cm
 float getShortRangeIR(void) {
-	return dist[SR_IR];
+
+	float sr = dist[SR_IR];
+
+	if (sr < MIN_SR || sr > MAX_SR) {
+		return NAN;
+	}
+	return sr;
 }
 
 // print current sensor values
