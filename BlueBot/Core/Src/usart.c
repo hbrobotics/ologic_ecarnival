@@ -9,10 +9,10 @@
   * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -26,6 +26,7 @@
 
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
+DMA_HandleTypeDef hdma_usart1_tx;
 
 /* USART1 init function */
 
@@ -33,7 +34,7 @@ void MX_USART1_UART_Init(void)
 {
 
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = 460800;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
@@ -102,6 +103,26 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+    /* USART1 DMA Init */
+    /* USART1_TX Init */
+    hdma_usart1_tx.Instance = DMA1_Channel4;
+    hdma_usart1_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    hdma_usart1_tx.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_usart1_tx.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_usart1_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_usart1_tx.Init.MemDataAlignment = DMA_MDATAALIGN_BYTE;
+    hdma_usart1_tx.Init.Mode = DMA_NORMAL;
+    hdma_usart1_tx.Init.Priority = DMA_PRIORITY_LOW;
+    if (HAL_DMA_Init(&hdma_usart1_tx) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(uartHandle,hdmatx,hdma_usart1_tx);
+
+    /* USART1 interrupt Init */
+    HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* USER CODE BEGIN USART1_MspInit 1 */
 
   /* USER CODE END USART1_MspInit 1 */
@@ -151,6 +172,11 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_6);
 
+    /* USART1 DMA DeInit */
+    HAL_DMA_DeInit(uartHandle->hdmatx);
+
+    /* USART1 interrupt Deinit */
+    HAL_NVIC_DisableIRQ(USART1_IRQn);
   /* USER CODE BEGIN USART1_MspDeInit 1 */
 
   /* USER CODE END USART1_MspDeInit 1 */
